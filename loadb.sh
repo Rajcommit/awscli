@@ -38,7 +38,7 @@ echo "Creating =======LoadBalancer=============="
 echo
 
 Load_BALANCER=$(aws elbv2 create-load-balancer \
- --name $LB_NAME --subnets $SUBNET_IDS \
+ --name $LB_NAME --subnets "$SUBNETS" \
  --security-groups $EC2_SECURITY_GROUP_ID  \
  --scheme internet-facing \
  --region $REGION \

@@ -25,7 +25,7 @@ SSMROLE=ssmagentRole
 
 REGION="us-east-1"
 VPC_ID=vpc-0132684a57620e458
-SUBNETS="subnet-04dbcd61235b7f94b,subnet-0b15e9f0cb64bdf7b"
+SUBNETS="subnet-04dbcd61235b7f94b"
 SG_ID="sg-0b88ee672bdba3cf8"
 LB_NAME="MyLoadBalancer"
 
