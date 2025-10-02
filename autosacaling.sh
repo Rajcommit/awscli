@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source= /mnt/c/shellpractice/loadb.sh
+source /mnt/c/shellpractice/loadb.sh
 
 set -euo pipefail  ## If the script fails, it will exit immediately
 
