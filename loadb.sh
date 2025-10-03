@@ -39,7 +39,7 @@ echo
 
 
 Load_BALANCER=$(aws elbv2 create-load-balancer \
- --name "$LB_NAME" --subnets $(aws ec2 describe-subnets --filters "Name=vpc-id,Values=$VPC_ID" --region $REGION --query 'Subnets[].SubnetId' --output text) \
+ --name "$LB_NAME" --subnets $SUBNETS \
  --security-groups $EC2_SECURITY_GROUP_ID  \
  --scheme internet-facing \
  --region $REGION \
@@ -63,7 +63,6 @@ LISTNER=$(aws elbv2 create-listener --load-balancer-arn $Load_BALANCER --protoco
  --output text )
 
  echo "The created Listener ARN is: $LISTNER"
-
 
 
 

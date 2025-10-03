@@ -1,7 +1,7 @@
 # variable.sh
 EC2_NAME="fighing4it"
 InstanceId="i-02869250b96a9576e"
-EC2_SECURITY_GROUP_ID="sg-0b88ee672bdba3cf8"
+EC2_SECURITY_GROUP_ID="sg-0a0af20548ef292f8"
 REGION=us-east-1
 
 
@@ -24,14 +24,13 @@ SSMROLE=ssmagentRole
 #================CONFIGURATION==========for LOAD BALANCER =============
 
 REGION="us-east-1"
-VPC_ID=vpc-09bd141db3cb07365
-SUBNETS="subnet-04dbcd61235b7f94b subnet-0b15e9f0cb64bdf7b"
-SG_ID="sg-0b88ee672bdba3cf8"
+VPC_ID=vpc-0b0207c63efcb71d7
+SUBNETS="subnet-0c8bbfa4878d30f60 subnet-0ffeee23250a17d7f"
+SG_ID="sg-0a0af20548ef292f8"
 LB_NAME="MyLoadBalancer"
 
 ##================CONFIGURATION==========For TARGET GROUP =============
 
 TARGET_GROUP_NAME="MyTargetGroup"
 LAUNCH_TEMPLATE="ASGLaunchTemplate"
-
 
