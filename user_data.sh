@@ -48,7 +48,7 @@ cat <<'PHPAPP' >/var/www/html/index.php
         mysqli_report(MYSQLI_REPORT_OFF);
         $servername = "rohurds.c49gci4ay5yo.us-east-1.rds.amazonaws.com";
         $username   = "rohurds";
-        $password   = "redfatrohini";
+        $password   = "redhatrohini";
         $dbname     = "databse";
 
         $conn = @mysqli_connect($servername, $username, $password, $dbname);
@@ -79,7 +79,7 @@ PHPAPP
 cat <<'ENVFILE' >/etc/profile.d/app-env.sh
 export DB_HOST=rohurds.c49gci4ay5yo.us-east-1.rds.amazonaws.com
 export DB_USER=rohurds
-export DB_PASS=redfatrohini
+export DB_PASS=redhatrohini
 export DB_NAME=databse
 ENVFILE
 

@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euo pipefail
+source /mnt/c/shellpractice/awscli/variable.sh
 
 ##===============CONFIGURATION==========
 
@@ -8,8 +9,6 @@ set -euo pipefail
 read -rp "Enter AWS region (default: us-east-1): " REGION
 REGION=${REGION:-us-east-1}
 
-
-read -rp "Enter the VPC-ID: " VPC_ID
 
 ##Creating the IGW
 read -rp "Enter IGW_NAME (default: NewIGA): " IGW_NAME

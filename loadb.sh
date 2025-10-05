@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-source /mnt/c/shellpractice/variable.sh
+source /mnt/c/shellpractice/awscli/variable.sh
 set -euo pipefail
 
 ##=== Configuration  =======

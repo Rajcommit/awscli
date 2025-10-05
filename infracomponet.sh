@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /mnt/c/shellpractice/variable.sh
+source /mnt/c/shellpractice/awscli/variable.sh
 
 set -euo pipefail  ##If the script fails , stopt the exectution
 
@@ -105,10 +105,10 @@ echo "All the ports are open now for sg: $EC2_SECURITY_GROUP_ID "
 EC2_SECURITY_GROUP_ID="$EC2_SECURITY_GROUP_ID"
 SUBNET_ID="$APP_TIER_A"
 
-read -rp "Enter the Instance_Name(default: neweraInstance): " EC2_NAME
-EC2_NAME=${EC2_NAME:-neweraInstance}
-
-
+#read -rp "Enter the Instance_Name(default: neweraInstance): " EC2_NAME
+#EC2_NAME=${EC2_NAME:-neweraInstance}
+#
+#echo "Instance name is : $EC2_NAME"
 
 ## RDS Config=====================
 read -rp "Enter the RDS Name(default: rohurds): " RDS_NAME
@@ -334,9 +334,64 @@ for placeholder, value in values.items():
     text = text.replace(placeholder, value)
 path.write_text(text)
 PY
+
+
+
+############+==================================Create a lauch template yaml bases=============================############
+
+
+##Encode the user data
+
+USER_DATA_B64=$(base64 -w0 user_data.sh)
+
+
+####=========Creatina yaml file for user data===================
+
+cat > launch-template.yaml <<EOF
+ImageId: ${AMI_ID}
+InstanceType: ${INSTANCE_TYPE}
+KeyName: ${KEY_PAIR}
+IamInstanceProfile:
+  Name: ${SSMROLE}
+NetworkInterfaces:
+  - AssociatePublicIpAddress: true
+    DeviceIndex: 0
+    SubnetId: ${SUBNET_ID}
+    Groups:
+      - ${EC2_SECURITY_GROUP_ID}
+UserData: "${USER_DATA_B64}"
+TagSpecifications:
+  - ResourceType: instance
+    Tags:
+      - Key: Name
+        Value: ${EC2_NAME}
+      - Key: Environment
+        Value: Dev
+      - Key: Project
+        Value: AutoInfra
+EOF
+
+echo " YAML Launch Template definition created at: launch-template.yaml"
+
+
+# Convert YAML → JSON and create Launch Template
+aws ec2 create-launch-template \
+  --launch-template-name "$LAUNCH_TEMPLATE" \
+  --version-description "v1 - WebApp with Apache, PHP, and RDS" \
+  --launch-template-data "$(yq -o=json '.' launch-template.yaml)" \
+  --region "$REGION"
+
+
+echo " Launch Template '$LAUNCH_TEMPLATE' created successfully."
+
+
 #===============CREATION-EC2-Instance============
 
-EC2_ID=$( aws ec2 run-instances --image-id "$AMI_ID"  --subnet-id "$SUBNET_ID" --iam-instance-profile Name="$SSMROLE" --region "$REGION" --instance-type "$INSTANCE_TYPE" --key-name "$KEY_PAIR" --user-data file://user_data.sh --security-group-ids "$EC2_SECURITY_GROUP_ID" --associate-public-ip-address --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=${EC2_NAME}},{Key=Region,Value=us-east-1}]" --query "Instances[0].InstanceId" --output text )
+ EC2_ID=$(aws ec2 run-instances \                                                                                                                                                                                       
+    --launch-template LaunchTemplateName="$LAUNCH_TEMPLATE",Version="$LAUNCH_TEMPLATE_VERSION" \                                                                                                                         
+    --region "$REGION" \                                                                                                                                                                                                 
+    --query 'Instances[0].InstanceId' \                                                                                                                                                                                  
+    --output text)
 
 
 ##GET Public IP####

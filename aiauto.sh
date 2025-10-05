@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-source /mnt/c/shellpractice/variable.sh
+source /mnt/c/shellpractice/awscli/variable.sh
 
 export AWS_PAGER=""
 
