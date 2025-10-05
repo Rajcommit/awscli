@@ -33,40 +33,40 @@ CIDR=$(aws ec2 describe-vpcs --vpc-ids $VPC_ID --query 'Vpcs[0].CidrBlock' --out
 
 ###===========================Security-Group-creation====================================
 
-EC2_SECURITY_GROUP_ID=$(aws ec2 create-security-group \
-    --group-name AllowAllSG \
-    --description "Allow all inbound and outbound traffic for EC2" \
-    --vpc-id $VPC_ID \
-    --region $REGION \
-    --query 'GroupId'  --output text )
-
-RDS_SECURITY_GROUP_ID=$(aws ec2 create-security-group \
-    --group-name AllowRDSSG \
-    --description "Allow all inbound and outbound traffic for RDS" \
-    --vpc-id $VPC_ID \
-    --region $REGION \
-    --query 'GroupId'  --output text )
-
+####3333333EC2_SECURITY_GROUP_ID=$(aws ec2 create-security-group \
+####3333333    --group-name AllowAllSG \
+####3333333    --description "Allow all inbound and outbound traffic for EC2" \
+####3333333    --vpc-id $VPC_ID \
+####3333333    --region $REGION \
+####3333333    --query 'GroupId'  --output text )
+####3333333
+####3333333RDS_SECURITY_GROUP_ID=$(aws ec2 create-security-group \
+####3333333    --group-name AllowRDSSG \
+####3333333    --description "Allow all inbound and outbound traffic for RDS" \
+####3333333    --vpc-id $VPC_ID \
+####3333333    --region $REGION \
+####3333333    --query 'GroupId'  --output text )
+####3333333
 echo -e "The created security-group-ID is: \033[0;32m$EC2_SECURITY_GROUP_ID\033[0m"
 
 
 echo -e "The CIDR block for VPC \033[0;36m$VPC_ID\033[0m is \033[0;36m$CIDR\033[0m"
 
-aws ec2 authorize-security-group-ingress \
-    --group-id $EC2_SECURITY_GROUP_ID \
-    --protocol -1 \
-    --port -1 \
-    --cidr 0.0.0.0/0 \
-    --region $REGION
-
-
-aws ec2 authorize-security-group-ingress \
-    --group-id $RDS_SECURITY_GROUP_ID \
-    --protocol -1 \
-    --port -1 \
-    --cidr $CIDR \
-    --region $REGION
-
+#3333aws ec2 authorize-security-group-ingress \
+#3333    --group-id $EC2_SECURITY_GROUP_ID \
+#3333    --protocol -1 \
+#3333    --port -1 \
+#3333    --cidr 0.0.0.0/0 \
+#3333    --region $REGION
+#3333
+#3333
+#3333aws ec2 authorize-security-group-ingress \
+#3333    --group-id $RDS_SECURITY_GROUP_ID \
+#3333    --protocol -1 \
+#3333    --port -1 \
+#3333    --cidr $CIDR \
+#3333    --region $REGION
+#3333
 
 #aws ec2 authorize-security-group-ingress \
 #    --group-id $EC2_SECURITY_GROUP_ID \
@@ -124,31 +124,31 @@ DB_USERNAME=${DB_USERNAME:-rohurds}
 
 
 
-while true; do
-read -rsp "Enter the DB Password(default: redhatrohini): " DB_PASSWORD
-echo
-
-DB_PASSWORD=${DB_PASSWORD:-redhatrohini}
-
-if [[ ${#DB_PASSWORD} -lt 8 ]]; then
-    echo "Password must be at least 8 characters long. Please try again."
-    continue
-fi
-read -rsp "Confirm Password: " DB_PASSWORD_CONFIRM
-echo
-if [[ "$DB_PASSWORD" != "$DB_PASSWORD_CONFIRM" ]]; then
-    echo "Passwords do not match. Please try again."
-   continue
-fi
-echo "Password accepted"
-break
-done
-
-DB_SECURITY_GROUP_NAME="default"
-DB_SUBNET_GROUP_NAME="rohurdssubs"
-SUBNET_IDS=( $DATA_TIER_A $DATA_TIER_B)
-
-echo "$SUBNET_ID"
+#33333333333333while true; do
+#33333333333333read -rsp "Enter the DB Password(default: redhatrohini): " DB_PASSWORD
+#33333333333333echo
+#33333333333333
+#33333333333333DB_PASSWORD=${DB_PASSWORD:-redhatrohini}
+#33333333333333
+#33333333333333if [[ ${#DB_PASSWORD} -lt 8 ]]; then
+#33333333333333    echo "Password must be at least 8 characters long. Please try again."
+#33333333333333    continue
+#33333333333333fi
+#33333333333333read -rsp "Confirm Password: " DB_PASSWORD_CONFIRM
+#33333333333333echo
+#33333333333333if [[ "$DB_PASSWORD" != "$DB_PASSWORD_CONFIRM" ]]; then
+#33333333333333    echo "Passwords do not match. Please try again."
+#33333333333333   continue
+#33333333333333fi
+#33333333333333echo "Password accepted"
+#33333333333333break
+#33333333333333done
+#33333333333333
+#33333333333333DB_SECURITY_GROUP_NAME="default"
+#33333333333333DB_SUBNET_GROUP_NAME="rohurdssubs"
+#33333333333333SUBNET_IDS=( $DATA_TIER_A $DATA_TIER_B)
+#33333333333333
+#33333333333333echo "$SUBNET_ID"
 
 # Enable DNS support
 aws ec2 modify-vpc-attribute \
@@ -162,178 +162,63 @@ aws ec2 modify-vpc-attribute \
 
 
 
-if ! aws rds describe-db-subnet-groups --db-subnet-group-name "$DB_SUBNET_GROUP_NAME"  --region "$REGION" >/dev/null 2>&1; then
-echo "Creating DB subnet group: $DB_SUBNET_GROUP_NAME"
-aws rds create-db-subnet-group \
-    --db-subnet-group-name "$DB_SUBNET_GROUP_NAME" \
-    --db-subnet-group-description "Rohisubs" \
-    --subnet-ids "${SUBNET_IDS[@]}" \
-    --region "$REGION" \
-    --query "DBSubnetGroup.DBSubnetGroupName" \
-    --output text
-echo "Createed DB subnetgroup: $DB_SUBNET_GROUP_NAME"
-else 
-echo "Db subnet group $DB_SUBNET_GROUP_NAME already exists"
-fi
-echo "Createed DB subnetgroup: $DB_SUBNET_GROUP_NAME"
+#33333333333if ! aws rds describe-db-subnet-groups --db-subnet-group-name "$DB_SUBNET_GROUP_NAME"  --region "$REGION" >/dev/null 2>&1; then
+#33333333333echo "Creating DB subnet group: $DB_SUBNET_GROUP_NAME"
+#33333333333aws rds create-db-subnet-group \
+#33333333333    --db-subnet-group-name "$DB_SUBNET_GROUP_NAME" \
+#33333333333    --db-subnet-group-description "Rohisubs" \
+#33333333333    --subnet-ids "${SUBNET_IDS[@]}" \
+#33333333333    --region "$REGION" \
+#33333333333    --query "DBSubnetGroup.DBSubnetGroupName" \
+#33333333333    --output text
+#33333333333echo "Createed DB subnetgroup: $DB_SUBNET_GROUP_NAME"
+#33333333333else
+#33333333333echo "Db subnet group $DB_SUBNET_GROUP_NAME already exists"
+#33333333333fi
+#33333333333echo "Createed DB subnetgroup: $DB_SUBNET_GROUP_NAME"
 
 
 #########################Creating_RDS#######################################################
 
-aws rds create-db-instance \
-  --db-instance-identifier "$RDS_NAME" \
-  --db-instance-class "$DB_CLASS" \
-  --engine "$DB_ENGINE" \
-  --engine-version "$DB_VERSION" \
-  --allocated-storage 20 \
-  --master-username "$DB_USERNAME" \
-  --master-user-password "$DB_PASSWORD" \
-  --db-name "$DB_NAME" \
-  --db-subnet-group-name "$DB_SUBNET_GROUP_NAME" \
-  --vpc-security-group-ids "$RDS_SECURITY_GROUP_ID" \
-  --backup-retention-period 1 \
-  --publicly-accessible \
-  --region "$REGION" \
-  --tags "Key=name,Value=${RDS_NAME}"
-
-################Waiting for the rds to come up#############################33
-
-echo "Waiting for Db to become avilable"
-aws rds wait db-instance-available --db-instance-identifier "$RDS_NAME" --region "$REGION"
-
-###=================Get the RDs endpoint########################
-
-DB_ENDPOINT=$( aws rds describe-db-instances --db-instance-identifier "$RDS_NAME" --region "$REGION"  --query "DBInstances[0].Endpoint.Address"  --output text )
-
-echo "RDS Instance ready at endpoint: $DB_ENDPOINT"
-
+###33333333333aws rds create-db-instance \
+###33333333333  --db-instance-identifier "$RDS_NAME" \
+###33333333333  --db-instance-class "$DB_CLASS" \
+###33333333333  --engine "$DB_ENGINE" \
+###33333333333  --engine-version "$DB_VERSION" \
+###33333333333  --allocated-storage 20 \
+###33333333333  --master-username "$DB_USERNAME" \
+###33333333333  --master-user-password "$DB_PASSWORD" \
+###33333333333  --db-name "$DB_NAME" \
+###33333333333  --db-subnet-group-name "$DB_SUBNET_GROUP_NAME" \
+###33333333333  --vpc-security-group-ids "$RDS_SECURITY_GROUP_ID" \
+###33333333333  --backup-retention-period 1 \
+###33333333333  --publicly-accessible \
+###33333333333  --region "$REGION" \
+###33333333333  --tags "Key=name,Value=${RDS_NAME}"
+###33333333333
+###33333333333################Waiting for the rds to come up#############################33
+###33333333333
+###33333333333echo "Waiting for Db to become avilable"
+###33333333333aws rds wait db-instance-available --db-instance-identifier "$RDS_NAME" --region "$REGION"
+###33333333333
+###33333333333###=================Get the RDs endpoint########################
+###33333333333
+###33333333333DB_ENDPOINT=$( aws rds describe-db-instances --db-instance-identifier "$RDS_NAME" --region "$REGION"  --query "DBInstances[0].Endpoint.Address"  --output text )
+###33333333333
+###33333333333echo "RDS Instance ready at endpoint: $DB_ENDPOINT"
+###33333333333
 
 ##===Creating the USer_Data===========
 
 ##=== Creating the User Data (with DB injected) ===========
 
+
 cat > user_data.sh <<'EOF'
 #!/bin/bash
 set -euxo pipefail
-exec > >(tee /var/log/user-data.log | logger -t user-data -s) 2>&1
-
-echo "[user-data] Starting bootstrap at $(date --iso-8601=seconds)"
-
-if ! command -v dnf >/dev/null 2>&1; then
-  echo "[user-data] dnf not found; this script expects Amazon Linux 2023" >&2
-  exit 1
-fi
-
-dnf -y update
-dnf -y install httpd php php-cli php-mysqlnd
-
-systemctl enable --now httpd
-
-cat <<'PHPINFO' >/var/www/html/info.php
-<?php
-phpinfo();
-PHPINFO
-
-cat <<'PHPAPP' >/var/www/html/index.php
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>🌟 Welcome to My Dynamic AWS Site 🌟</title>
-  <style>
-    body { margin:0; font-family:'Segoe UI',sans-serif; background:linear-gradient(135deg,#74ABE2,#5563DE); color:white; text-align:center; }
-    header { padding:40px; background:rgba(0,0,0,0.5); }
-    h1 { font-size:3em; margin:0; }
-    p { font-size:1.2em; }
-    .card { background:white; color:#333; margin:40px auto; padding:20px; border-radius:12px; max-width:600px; box-shadow:0px 4px 20px rgba(0,0,0,0.3); }
-    img { max-width:100%; border-radius:12px; }
-    footer { padding:20px; background:rgba(0,0,0,0.4); margin-top:40px; }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>🌐 My AWS Dynamic Website</h1>
-    <p>Running on EC2 + RDS</p>
-  </header>
-  <div class="card">
-    <img src="https://source.unsplash.com/800x400/?nature,technology" alt="Banner Image">
-    <h2>Hello from EC2!</h2>
-    <p>
-      <?php
-        mysqli_report(MYSQLI_REPORT_OFF);
-        $servername = PHP_DB_HOST;
-        $username   = PHP_DB_USER;
-        $password   = PHP_DB_PASS;
-        $dbname     = PHP_DB_NAME;
-
-        $conn = @mysqli_connect($servername, $username, $password, $dbname);
-        if (!$conn) {
-          echo '❌ Database connection failed: ' . htmlspecialchars(mysqli_connect_error(), ENT_QUOTES, 'UTF-8');
-        } else {
-          echo '✅ Connected to database: ' . htmlspecialchars($dbname, ENT_QUOTES, 'UTF-8') . '<br>';
-          $result = mysqli_query($conn, 'SELECT NOW() AS nowtime');
-          if ($result) {
-            $row = mysqli_fetch_assoc($result);
-            if ($row && isset($row['nowtime'])) {
-              echo '⏰ Current DB time: ' . htmlspecialchars($row['nowtime'], ENT_QUOTES, 'UTF-8');
-            }
-            mysqli_free_result($result);
-          }
-          mysqli_close($conn);
-        }
-      ?>
-    </p>
-  </div>
-  <footer>
-    <p>🚀 Powered by AWS | EC2 + RDS + Apache + PHP</p>
-  </footer>
-</body>
-</html>
-PHPAPP
-
-cat <<'ENVFILE' >/etc/profile.d/app-env.sh
-export DB_HOST=DB_HOST_ENV
-export DB_USER=DB_USER_ENV
-export DB_PASS=DB_PASS_ENV
-export DB_NAME=DB_NAME_ENV
-ENVFILE
-
-chown apache:apache /var/www/html/index.php /var/www/html/info.php
-chmod 644 /var/www/html/*.php
-
-systemctl restart httpd
-
-curl -fsS http://127.0.0.1/ | head -n 20 || true
-curl -fsS http://127.0.0.1/info.php | head -n 20 || true
-systemctl status httpd --no-pager || true
-
-echo "[user-data] Completed at $(date --iso-8601=seconds)"
+curl -fsSL https://newerabucket2026.s3.us-east-1.amazonaws.com/userdataraw.sh -o /tmp/userdataraw.sh
+bash /tmp/userdataraw.sh
 EOF
-
-export DB_ENDPOINT DB_NAME DB_USERNAME DB_PASSWORD
-python3 - <<'PY'
-import json
-import os
-from pathlib import Path
-import shlex
-
-values = {
-    'PHP_DB_HOST': json.dumps(os.environ['DB_ENDPOINT']),
-    'PHP_DB_NAME': json.dumps(os.environ['DB_NAME']),
-    'PHP_DB_USER': json.dumps(os.environ['DB_USERNAME']),
-    'PHP_DB_PASS': json.dumps(os.environ['DB_PASSWORD']),
-    'DB_HOST_ENV': shlex.quote(os.environ['DB_ENDPOINT']),
-    'DB_NAME_ENV': shlex.quote(os.environ['DB_NAME']),
-    'DB_USER_ENV': shlex.quote(os.environ['DB_USERNAME']),
-    'DB_PASS_ENV': shlex.quote(os.environ['DB_PASSWORD']),
-}
-
-path = Path('user_data.sh')
-text = path.read_text()
-for placeholder, value in values.items():
-    text = text.replace(placeholder, value)
-path.write_text(text)
-PY
 
 
 
@@ -387,10 +272,10 @@ echo " Launch Template '$LAUNCH_TEMPLATE' created successfully."
 
 #===============CREATION-EC2-Instance============
 
- EC2_ID=$(aws ec2 run-instances \                                                                                                                                                                                       
-    --launch-template LaunchTemplateName="$LAUNCH_TEMPLATE",Version="$LAUNCH_TEMPLATE_VERSION" \                                                                                                                         
-    --region "$REGION" \                                                                                                                                                                                                 
-    --query 'Instances[0].InstanceId' \                                                                                                                                                                                  
+ EC2_ID=$(aws ec2 run-instances \
+    --launch-template LaunchTemplateName="$LAUNCH_TEMPLATE",Version="$LAUNCH_TEMPLATE_VERSION" \
+    --region "$REGION" \
+    --query 'Instances[0].InstanceId' \
     --output text)
 
 
