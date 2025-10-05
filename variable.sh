@@ -1,7 +1,7 @@
 # variable.sh
 VPC_ID=vpc-01c7c81d30aa4acac
 EC2_NAME="neweraInstances"
-InstanceId=$(aws ec2 describe-instances --region us-east-1 --filters "Name=tag:Name,Values=$EC2_NAME" --query "Reservations[*].Instances[*].InstanceId" --output text)
+
 EC2_SECURITY_GROUP_ID="sg-09c16eeee678df7e8"
 REGION=us-east-1
 
@@ -27,6 +27,7 @@ KEY_PAIR="newkey"
 SUBNET_IDS="subnet-0ee29bfd460a81706 subnet-0373a98868bdbdd6a"
 AMI=ami-08982f1c5bf93d976
 SSMROLE=ssmagentRole
+LAUNCH_TEMPLATE=ASGLaunchTemplate
 CIDR=$(aws ec2 describe-vpcs --vpc-ids $VPC_ID --query 'Vpcs[0].CidrBlock' --output text)
 # Scaling configuration
 ASG_NAME=MaASG
