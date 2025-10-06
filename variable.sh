@@ -1,5 +1,5 @@
 # variable.sh
-VPC_ID=vpc-01c7c81d30aa4acac
+VPC_ID=vpc-09f622dd492ea0702
 EC2_NAME="neweraInstances"
 
 EC2_SECURITY_GROUP_ID="sg-09c16eeee678df7e8"
@@ -24,7 +24,7 @@ DB_NAME="databse"
 AMI_ID="ami-08982f1c5bf93d976"
 INSTANCE_TYPE="t3.micro"
 KEY_PAIR="newkey"
-SUBNET_IDS="subnet-0ee29bfd460a81706 subnet-0373a98868bdbdd6a"
+SUBNET_IDS="subnet-0f7f73e2bcce52b14 subnet-0fde8b40532ab1a9d"
 AMI=ami-08982f1c5bf93d976
 SSMROLE=ssmagentRole
 LAUNCH_TEMPLATE=ASGLaunchTemplate
@@ -39,8 +39,8 @@ SSMROLE=ssmagentRole
 
 #================CONFIGURATION==========for LOAD BALANCER =============
 
-SUBNETS="subnet-0ee29bfd460a81706 subnet-0373a98868bdbdd6a"
-SUBNET_ID=subnet-0ee29bfd460a81706
+SUBNETS="subnet-0f7f73e2bcce52b14 subnet-0fde8b40532ab1a9d"
+SUBNET_ID=subnet-0f7f73e2bcce52b14
 SG_ID="sg-0a03f442de642f8a0"
 LB_NAME="MyLoadBalancer"
 

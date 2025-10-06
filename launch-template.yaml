@@ -6,9 +6,9 @@ IamInstanceProfile:
 NetworkInterfaces:
   - AssociatePublicIpAddress: true
     DeviceIndex: 0
-    SubnetId: subnet-0ee29bfd460a81706
+    SubnetId: subnet-0f7f73e2bcce52b14
     Groups:
-      - sg-09c16eeee678df7e8
+      - sg-0efe7af1be5031707
 UserData: "IyEvYmluL2Jhc2gKc2V0IC1ldXhvIHBpcGVmYWlsCmN1cmwgLWZzU0wgaHR0cHM6Ly9uZXdlcmFidWNrZXQyMDI2LnMzLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tL3VzZXJkYXRhcmF3LnNoIC1vIC90bXAvdXNlcmRhdGFyYXcuc2gKYmFzaCAvdG1wL3VzZXJkYXRhcmF3LnNoCg=="
 TagSpecifications:
   - ResourceType: instance
