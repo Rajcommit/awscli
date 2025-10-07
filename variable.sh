@@ -1,7 +1,7 @@
 # variable.sh
-VPC_ID=vpc-09f622dd492ea0702
+VPC_ID=vpc-0ab4fa0f05419f0ad
 EC2_NAME="neweraInstances"
-
+IGW_NAME="NewIGA"
 EC2_SECURITY_GROUP_ID="sg-09c16eeee678df7e8"
 REGION=us-east-1
 

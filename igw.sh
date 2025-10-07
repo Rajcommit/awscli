@@ -2,18 +2,9 @@
 set -euo pipefail
 source /mnt/c/shellpractice/awscli/variable.sh
 
+export AWS_PAGER=""
+
 ##===============CONFIGURATION==========
-
-##Creating region 
-
-read -rp "Enter AWS region (default: us-east-1): " REGION
-REGION=${REGION:-us-east-1}
-
-
-##Creating the IGW
-read -rp "Enter IGW_NAME (default: NewIGA): " IGW_NAME
-IGW_NAME=${IGW_NAME:-NewIGA}
-
 
 read -rp "Enter the first app_tier-Id: " APP_TIER_A
 read -rp "Enter the second app_tier-Id: " APP_TIER_B
